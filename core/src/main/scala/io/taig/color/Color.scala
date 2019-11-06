@@ -57,11 +57,11 @@ object Color {
     * fromHex(0xFF0000FF, digits = 8)
     * }}}
     *
-    * This method asks requires you to specify the amount of digits because
-    * hexadecimal color values should be represented as Strings, not numbers.
-    * This method will, for instance, accept `0xF` as input value but might
-    * misinterpret it without the digits hint as it could mean `0x00F`,
-    * `0x000F`, `0x00000F` or event `0x0000000F`.
+    * This method requires the amount of digits because hexadecimal color values
+    * should generally be represented as Strings, not numbers. This method will,
+    * for instance, accept `0xF` as input value but might misinterpret it
+    * without the explicit digits hint as it could mean `0x00F`, `0x000F`,
+    * `0x00000F` or even `0x0000000F`.
     */
   def fromHex(value: Long, digits: Int): Either[String, Color] =
     if (value < 0x0 || value > 0XFFFFFFFFL)
