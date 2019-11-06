@@ -8,7 +8,9 @@ lazy val core = crossProject(JVMPlatform, JSPlatform)
   .crossType(CrossType.Pure)
   .settings(sonatypePublishSettings)
   .settings(
-    initialCommands in console += "import io.taig.color._",
+    initialCommands in console +=
+      """import io.taig.color._
+        |import io.taig.color.implicits._""".stripMargin,
     libraryDependencies ++=
       "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided" ::
         "io.taig" %%% "testf-auto" % "0.1.2-SNAPSHOT" % "test" ::
