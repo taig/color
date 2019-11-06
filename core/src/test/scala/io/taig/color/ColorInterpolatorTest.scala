@@ -2,6 +2,7 @@ package io.taig.color
 
 import io.taig.color.dsl._
 import io.taig.color.implicits._
+import io.taig.testf._
 import io.taig.testf.{AutoTest, IOAutoTestApp}
 
 @AutoTest

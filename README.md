@@ -2,7 +2,9 @@
 
 > A simple approach to colors with String interpolators
 
-## Getting started
+## Dependency
+
+_Color_ is available for Scala(.js) 2.13 and 2.12.
 
 ```scala
 libraryDependencies ++=

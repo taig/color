@@ -18,15 +18,9 @@ final case class Color(
   /** Print the color as a hex string */
   def toHex: String = alpha match {
     case Some(alpha) =>
-      String.format(
-        "#%02x%02x%02x%02x",
-        red.value,
-        green.value,
-        blue.value,
-        alpha.value
-      )
+      f"#${red.value}%02x${green.value}%02x${blue.value}%02x${alpha.value}%02x"
     case None =>
-      String.format("#%02x%02x%02x", red.value, green.value, blue.value)
+      f"#${red.value}%02x${green.value}%02x${blue.value}%02x"
   }
 
   /** Print the color a rgb or rgba string */
