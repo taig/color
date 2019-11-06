@@ -56,4 +56,34 @@ object ColorTest extends IOAutoTestApp {
       )
     }
   )
+
+  test("toHex")(
+    test("#FFFFFF") {
+      isEqual("#ffffff")(Color.White.toHex)
+    },
+    test("#FFFFFFFF") {
+      isEqual("#ffffffff")(Color.White.alpha(MaxValue).toHex)
+    },
+    test("#000000") {
+      isEqual("#000000")(Color.Black.toHex)
+    },
+    test("#000000FF") {
+      isEqual("#000000ff")(Color.Black.alpha(MaxValue).toHex)
+    }
+  )
+
+  test("toRgb")(
+    test("#FFFFFF") {
+      isEqual("rgb(255, 255, 255)")(Color.White.toRgb)
+    },
+    test("#FFFFFFFF") {
+      isEqual("rgba(255, 255, 255, 255)")(Color.White.alpha(MaxValue).toRgb)
+    },
+    test("#000000") {
+      isEqual("rgb(0, 0, 0)")(Color.Black.toRgb)
+    },
+    test("#000000FF") {
+      isEqual("rgba(0, 0, 0, 255)")(Color.Black.alpha(MaxValue).toRgb)
+    }
+  )
 }

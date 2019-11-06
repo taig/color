@@ -1,11 +1,19 @@
-initialCommands in console += "import io.taig.color._"
+import sbtcrossproject.CrossPlugin.autoImport.{crossProject, CrossType}
 
-libraryDependencies ++=
-  "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided" ::
-    "io.taig" %% "testf-auto" % "0.1.2-SNAPSHOT" % "test" ::
-    "io.taig" %% "testf-runner-sbt" % "0.1.2-SNAPSHOT" % "test" ::
-    Nil
+lazy val color = project
+  .in(file("."))
+  .aggregate(core.jvm, core.js)
 
-resolvers += Resolver.sonatypeRepo("snapshots")
-
-testFrameworks += new TestFramework("io.taig.testf.runner.TestF")
+lazy val core = crossProject(JVMPlatform, JSPlatform)
+  .crossType(CrossType.Pure)
+  .settings(sonatypePublishSettings)
+  .settings(
+    initialCommands in console += "import io.taig.color._",
+    libraryDependencies ++=
+      "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided" ::
+        "io.taig" %%% "testf-auto" % "0.1.2-SNAPSHOT" % "test" ::
+        "io.taig" %%% "testf-runner-sbt" % "0.1.2-SNAPSHOT" % "test" ::
+        Nil,
+    resolvers += Resolver.sonatypeRepo("snapshots"),
+    testFrameworks += new TestFramework("io.taig.testf.runner.TestF")
+  )
