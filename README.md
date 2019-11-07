@@ -23,6 +23,9 @@ libraryDependencies ++=
 import io.taig.color.Color
 import io.taig.color.implicits._
 
+val red = rgb"FF000"
+// error: Color value can only have 6 (rgba), 8 (rgba), 3 (rgb shorthand) or 4 (rgba shorthand) digits
+
 val red: Color = rgb"FF0000"
 // red: io.taig.color.Color = Color(255,0,0,None)
 
