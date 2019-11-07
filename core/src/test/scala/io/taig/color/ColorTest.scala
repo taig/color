@@ -7,6 +7,25 @@ import io.taig.testf.{AutoTest, IOAutoTestApp}
 
 @AutoTest
 object ColorTest extends IOAutoTestApp {
+  test("fromHex")(
+    test("value")(
+      test("0x00 - 1") {
+        fromLeft(Color.fromHex(0x00 - 1, digits = 8))
+      },
+      test("0xFFFFFFFFF + 1") {
+        fromLeft(Color.fromHex(0XFFFFFFFFFL + 1, digits = 8))
+      }
+    ),
+    test("digits")(
+      test("0")(fromLeft(Color.fromHex(0xFFFFFF, digits = 0))),
+      test("1")(fromLeft(Color.fromHex(0xFFFFFF, digits = 1))),
+      test("2")(fromLeft(Color.fromHex(0xFFFFFF, digits = 2))),
+      test("5")(fromLeft(Color.fromHex(0xFFFFFF, digits = 5))),
+      test("7")(fromLeft(Color.fromHex(0xFFFFFF, digits = 7))),
+      test("9")(fromLeft(Color.fromHex(0xFFFFFF, digits = 9)))
+    )
+  )
+
   test("parseHex")(
     test("#FFF") {
       fromRight(Color.parseHex("#FFF")) assert isEqual(Color.White)

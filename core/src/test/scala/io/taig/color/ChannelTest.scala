@@ -25,8 +25,8 @@ object ChannelTest extends IOAutoTestApp {
   )
 
   test("fromHex")(
-    test("-1") {
-      fromLeft(Channel.fromHex(-1))
+    test("0x00 - 1") {
+      fromLeft(Channel.fromHex(0x00 - 1))
     },
     test("0x00") {
       fromRight(Channel.fromHex(0x00))
@@ -37,8 +37,8 @@ object ChannelTest extends IOAutoTestApp {
     test("0xFF") {
       fromRight(Channel.fromHex(0xFF))
     },
-    test("0xFFF") {
-      fromLeft(Channel.fromHex(0xFFF))
+    test("0xFF + 1") {
+      fromLeft(Channel.fromHex(0xFF + 1))
     }
   )
 }
