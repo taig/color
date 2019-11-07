@@ -63,46 +63,40 @@ object Color {
     * without the explicit digits hint as it could mean `0x00F`, `0x000F`,
     * `0x00000F` or even `0x0000000F`.
     */
-  def fromHex(value: Long, digits: Int): Either[String, Color] =
-    if (value < 0x0 || value > 0XFFFFFFFFL)
+  def fromHex(value: Long, digits: Int): Either[String, Color] = {
+    val channel: Long => Channel = value =>
+      Channel.unsafeFromUnsignedShort(value.toShort)
+
+    if (value < 0x00 || value > 0XFFFFFFFFL)
       Left("Color value must be between 0x00000000 and 0xFFFFFFFF")
     else if (digits == 3) {
-      val red =
-        Channel.unsafeFromUnsignedShort((((value & 0xFFF) >> 8) * 17).toShort)
-      val green =
-        Channel.unsafeFromUnsignedShort((((value & 0xFF) >> 4) * 17).toShort)
-      val blue = Channel.unsafeFromUnsignedShort(((value & 0xF) * 17).toShort)
+      val red = channel(((value & 0xFFF) >> 8) * 17)
+      val green = channel(((value & 0xFF) >> 4) * 17)
+      val blue = channel((value & 0xF) * 17)
       Right(Color(red, green, blue, None))
     } else if (digits == 4) {
-      val red =
-        Channel.unsafeFromUnsignedShort((((value & 0xFFFF) >> 12) * 17).toShort)
-      val green =
-        Channel.unsafeFromUnsignedShort((((value & 0xFFF) >> 8) * 17).toShort)
-      val blue =
-        Channel.unsafeFromUnsignedShort((((value & 0xFF) >> 4) * 17).toShort)
-      val alpha = Channel.unsafeFromUnsignedShort(((value & 0xF) * 17).toShort)
+      val red = channel(((value & 0xFFFF) >> 12) * 17)
+      val green = channel(((value & 0xFFF) >> 8) * 17)
+      val blue = channel(((value & 0xFF) >> 4) * 17)
+      val alpha = channel((value & 0xF) * 17)
       Right(Color(red, green, blue, Some(alpha)))
     } else if (digits == 6) {
-      val red =
-        Channel.unsafeFromUnsignedShort(((value & 0xFFFFFF) >> 16).toShort)
-      val green =
-        Channel.unsafeFromUnsignedShort(((value & 0xFFFF) >> 8).toShort)
-      val blue = Channel.unsafeFromUnsignedShort((value & 0xFF).toShort)
+      val red = channel((value & 0xFFFFFF) >> 16)
+      val green = channel((value & 0xFFFF) >> 8)
+      val blue = channel(value & 0xFF)
       Right(Color(red, green, blue, None))
     } else if (digits == 8) {
-      val red =
-        Channel.unsafeFromUnsignedShort(((value & 0xFFFFFFFF) >> 24).toShort)
-      val green =
-        Channel.unsafeFromUnsignedShort(((value & 0xFFFFFF) >> 16).toShort)
-      val blue =
-        Channel.unsafeFromUnsignedShort(((value & 0xFFFF) >> 8).toShort)
-      val alpha = Channel.unsafeFromUnsignedShort((value & 0xFF).toShort)
+      val red = channel((value & 0xFFFFFFFF) >> 24)
+      val green = channel((value & 0xFFFFFF) >> 16)
+      val blue = channel((value & 0xFFFF) >> 8)
+      val alpha = channel(value & 0xFF)
       Right(Color(red, green, blue, Some(alpha)))
     } else {
       val message = "Color value can only have 6 (rgba), 8 (rgba), 3 (rgb " +
         "shorthand) or 4 (rgba shorthand) digits"
       Left(message)
     }
+  }
 
   /**
     * Parse a hexadecimal `String` to a `Color`
