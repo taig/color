@@ -14,7 +14,7 @@ object ChannelTest extends IOAutoTestApp {
       isEqual(Channel.MinValue)(Channel.fromScale(0f))
     },
     test("0.5") {
-      isEqual(Channel.unsafeFromLong(127))(Channel.fromScale(.5f))
+      isEqual(Channel.unsafeFromUnsignedShort(127))(Channel.fromScale(.5f))
     },
     test("1") {
       isEqual(Channel.MaxValue)(Channel.fromScale(1f))
@@ -39,15 +39,6 @@ object ChannelTest extends IOAutoTestApp {
     },
     test("0xFFF") {
       fromLeft(Channel.fromHex(0xFFF))
-    }
-  )
-
-  test("parseHex")(
-    test("0x00") {
-      fromRight(Channel.parseHex("FF"))
-    },
-    test("foobar") {
-      fromLeft(Channel.parseHex("foobar"))
     }
   )
 }

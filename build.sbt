@@ -3,6 +3,9 @@ import sbtcrossproject.CrossPlugin.autoImport.{crossProject, CrossType}
 lazy val color = project
   .settings(noPublishSettings)
   .in(file("."))
+  .settings(
+    console := { (core.jvm / Compile / console).value }
+  )
   .aggregate(core.jvm, core.js)
 
 lazy val core = crossProject(JVMPlatform, JSPlatform)

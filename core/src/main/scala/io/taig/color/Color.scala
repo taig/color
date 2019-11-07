@@ -43,7 +43,7 @@ final case class Color(
 
 object Color {
 
-  /** Convert a (hexadecimal) number to a color
+  /** Convert a (hexadecimal) number to a `Color`
     *
     * Input values that are not within the `0x00000000 - 0xFFFFFFFF` range
     * will be rejected.
@@ -67,26 +67,36 @@ object Color {
     if (value < 0x0 || value > 0XFFFFFFFFL)
       Left("Color value must be between 0x00000000 and 0xFFFFFFFF")
     else if (digits == 3) {
-      val red = Channel.unsafeFromLong(((value & 0xFFF) >> 8) * 17)
-      val green = Channel.unsafeFromLong(((value & 0xFF) >> 4) * 17)
-      val blue = Channel.unsafeFromLong((value & 0xF) * 17)
+      val red =
+        Channel.unsafeFromUnsignedShort((((value & 0xFFF) >> 8) * 17).toShort)
+      val green =
+        Channel.unsafeFromUnsignedShort((((value & 0xFF) >> 4) * 17).toShort)
+      val blue = Channel.unsafeFromUnsignedShort(((value & 0xF) * 17).toShort)
       Right(Color(red, green, blue, None))
     } else if (digits == 4) {
-      val red = Channel.unsafeFromLong(((value & 0xFFFF) >> 12) * 17)
-      val green = Channel.unsafeFromLong(((value & 0xFFF) >> 8) * 17)
-      val blue = Channel.unsafeFromLong(((value & 0xFF) >> 4) * 17)
-      val alpha = Channel.unsafeFromLong((value & 0xF) * 17)
+      val red =
+        Channel.unsafeFromUnsignedShort((((value & 0xFFFF) >> 12) * 17).toShort)
+      val green =
+        Channel.unsafeFromUnsignedShort((((value & 0xFFF) >> 8) * 17).toShort)
+      val blue =
+        Channel.unsafeFromUnsignedShort((((value & 0xFF) >> 4) * 17).toShort)
+      val alpha = Channel.unsafeFromUnsignedShort(((value & 0xF) * 17).toShort)
       Right(Color(red, green, blue, Some(alpha)))
     } else if (digits == 6) {
-      val red = Channel.unsafeFromLong((value & 0xFFFFFF) >> 16)
-      val green = Channel.unsafeFromLong((value & 0xFFFF) >> 8)
-      val blue = Channel.unsafeFromLong(value & 0xFF)
+      val red =
+        Channel.unsafeFromUnsignedShort(((value & 0xFFFFFF) >> 16).toShort)
+      val green =
+        Channel.unsafeFromUnsignedShort(((value & 0xFFFF) >> 8).toShort)
+      val blue = Channel.unsafeFromUnsignedShort((value & 0xFF).toShort)
       Right(Color(red, green, blue, None))
     } else if (digits == 8) {
-      val red = Channel.unsafeFromLong((value & 0xFFFFFFFF) >> 24)
-      val green = Channel.unsafeFromLong((value & 0xFFFFFF) >> 16)
-      val blue = Channel.unsafeFromLong((value & 0xFFFF) >> 8)
-      val alpha = Channel.unsafeFromLong(value & 0xFF)
+      val red =
+        Channel.unsafeFromUnsignedShort(((value & 0xFFFFFFFF) >> 24).toShort)
+      val green =
+        Channel.unsafeFromUnsignedShort(((value & 0xFFFFFF) >> 16).toShort)
+      val blue =
+        Channel.unsafeFromUnsignedShort(((value & 0xFFFF) >> 8).toShort)
+      val alpha = Channel.unsafeFromUnsignedShort((value & 0xFF).toShort)
       Right(Color(red, green, blue, Some(alpha)))
     } else {
       val message = "Color value can only have 6 (rgba), 8 (rgba), 3 (rgb " +
@@ -95,9 +105,9 @@ object Color {
     }
 
   /**
-    * Parse a hexadecimal String to a color
+    * Parse a hexadecimal `String` to a `Color`
     *
-    * The String value may start with a `#`.
+    * The input `String` may start with a `#`.
     */
   def parseHex(value: String): Either[String, Color] = {
     val hex = if (value.startsWith("#")) value.substring(1) else value

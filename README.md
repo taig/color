@@ -9,7 +9,7 @@
 
 ## Dependency
 
-_Color_ is available for Scala(.js) 2.13 and 2.12.
+_Color_ is available for Scala(.js) 2.13 and 2.12 and has no external dependencies.
 
 ```scala
 libraryDependencies ++=
