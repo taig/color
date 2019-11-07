@@ -7,13 +7,16 @@ final case class Color(
     alpha: Option[Channel]
 ) {
 
-  /** Set the alpha channel to its max value */
-  def transparent: Color = alpha(Channel.MaxValue)
+  /** Set the alpha channel to its min value */
+  def transparent: Color = alpha(Channel.MinValue)
 
-  /** Remove the alpha channel */
-  def opaque: Color = copy(alpha = None)
+  /** Set the alpha channel to its min value */
+  def opaque: Color = alpha(Channel.MaxValue)
 
   def alpha(value: Channel): Color = copy(alpha = Some(value))
+
+  /** Remove the alpha channel information */
+  def dropAlpha: Color = copy(alpha = None)
 
   /** Print the color as a hex string */
   def toHex: String = alpha match {
