@@ -1,11 +1,11 @@
 # Color
 
 > A simple approach to colors with String interpolators
->
->[![GitLab CI](https://gitlab.com/taig-github/color/badges/master/build.svg?style=flat-square)](https://gitlab.com/taig-github/color/pipelines)
- [![GitLab CI](https://gitlab.com/taig-github/color/badges/master/coverage.svg?style=flat-square)](https://gitlab.com/taig-github/color/pipelines)
- [![Maven Central](https://img.shields.io/maven-central/v/io.taig/color-core_2.13.svg?style=flat-square)](https://search.maven.org/search?q=g:io.taig%20AND%20a:color-*)
- [![License](https://img.shields.io/github/license/taig/color?style=flat-square)](LICENSE)
+
+[![GitLab CI](https://gitlab.com/taig-github/color/badges/master/build.svg?style=flat-square)](https://gitlab.com/taig-github/color/pipelines)
+[![GitLab CI](https://gitlab.com/taig-github/color/badges/master/coverage.svg?style=flat-square)](https://gitlab.com/taig-github/color/pipelines)
+[![Maven Central](https://img.shields.io/maven-central/v/io.taig/color-core_2.13.svg?style=flat-square)](https://search.maven.org/search?q=g:io.taig%20AND%20a:color-*)
+[![License](https://img.shields.io/github/license/taig/color?style=flat-square)](LICENSE)
 
 ## Dependency
 
