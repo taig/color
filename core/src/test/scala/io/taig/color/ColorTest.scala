@@ -32,7 +32,7 @@ object ColorTest extends IOAutoTestApp {
     },
     test("#0FF") {
       fromRight(Color.parseHex("#0FF")) assert
-        isEqual(Color(MinValue, MaxValue, MaxValue, None))
+        isEqual(Color.opaque(MinValue, MaxValue, MaxValue))
     },
     test("#FFFF") {
       fromRight(Color.parseHex("#FFFF")) assert
@@ -50,7 +50,7 @@ object ColorTest extends IOAutoTestApp {
     },
     test("#ff0000") {
       fromRight(Color.parseHex("#ff0000")) assert
-        isEqual(Color(MaxValue, MinValue, MinValue, None))
+        isEqual(Color.opaque(MaxValue, MinValue, MinValue))
     },
     test("#FFFFFFFF") {
       fromRight(Color.parseHex("#FFFFFFFF")) assert
@@ -74,14 +74,14 @@ object ColorTest extends IOAutoTestApp {
     test("#FFFFFF") {
       isEqual("#ffffff")(Color.White.toHex)
     },
-    test("#FFFFFFFF") {
-      isEqual("#ffffffff")(Color.White.opaque.toHex)
+    test("#FFFFFF00") {
+      isEqual("#ffffff00")(Color.White.transparent.toHex)
     },
     test("#000000") {
       isEqual("#000000")(Color.Black.toHex)
     },
-    test("#000000FF") {
-      isEqual("#000000ff")(Color.Black.opaque.toHex)
+    test("#00000000") {
+      isEqual("#00000000")(Color.Black.transparent.toHex)
     }
   )
 
@@ -89,14 +89,14 @@ object ColorTest extends IOAutoTestApp {
     test("#FFFFFF") {
       isEqual("rgb(255, 255, 255)")(Color.White.toRgb)
     },
-    test("#FFFFFFFF") {
-      isEqual("rgba(255, 255, 255, 255)")(Color.White.opaque.toRgb)
+    test("#FFFFFF00") {
+      isEqual("rgba(255, 255, 255, 0)")(Color.White.transparent.toRgb)
     },
     test("#000000") {
       isEqual("rgb(0, 0, 0)")(Color.Black.toRgb)
     },
-    test("#000000FF") {
-      isEqual("rgba(0, 0, 0, 255)")(Color.Black.opaque.toRgb)
+    test("#00000000") {
+      isEqual("rgba(0, 0, 0, 0)")(Color.Black.transparent.toRgb)
     }
   )
 }
