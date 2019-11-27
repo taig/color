@@ -1,5 +1,7 @@
 package io.taig.color
 
+import java.awt.{Color => JColor}
+
 final case class Color(
     red: Channel,
     green: Channel,
@@ -39,11 +41,21 @@ final case class Color(
         render(green) + ", " +
         render(blue) + ", " +
         render(alpha) + ")"
+
+  def toAwt: JColor =
+    new JColor(red.value, green.value, blue.value, alpha.value)
 }
 
 object Color {
   def opaque(red: Channel, green: Channel, blue: Channel): Color =
     Color(red, green, blue, Channel.MaxValue)
+
+  def fromAwt(color: JColor): Color = Color(
+    Channel.unsafeFromUnsignedInt(color.getRed),
+    Channel.unsafeFromUnsignedInt(color.getGreen),
+    Channel.unsafeFromUnsignedInt(color.getBlue),
+    Channel.unsafeFromUnsignedInt(color.getAlpha)
+  )
 
   /** Convert a (hexadecimal) number to a `Color`
     *
