@@ -28,7 +28,7 @@ RUN         cd ./cache/ && sbt -v compile
 ADD         ./project ./cache/project/
 ADD         ./build.sbt ./cache/
 RUN         echo "class Test" > ./cache/src/test/scala/Test.scala
-RUN         cd ./cache/ && sbt -v coverage +test
+RUN         cd ./cache/ && sbt -v +test
 
 # Clean cache
 RUN         rm -r ./cache/
