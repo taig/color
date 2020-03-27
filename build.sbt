@@ -1,7 +1,7 @@
 import sbtcrossproject.CrossPlugin.autoImport.{crossProject, CrossType}
 
 val SilencerVersion = "1.6.0"
-val TestfVersion = "0.1.5-SNAPSHOT"
+val TestfVersion = "0.1.4"
 
 lazy val color = project
   .settings(noPublishSettings)
