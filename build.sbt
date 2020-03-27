@@ -1,7 +1,7 @@
 import sbtcrossproject.CrossPlugin.autoImport.{crossProject, CrossType}
 
 val SilencerVersion = "1.6.0"
-val TestfVersion = "0.1.2"
+val TestfVersion = "0.1.5-SNAPSHOT"
 
 lazy val color = project
   .settings(noPublishSettings)
@@ -27,5 +27,6 @@ lazy val core = crossProject(JVMPlatform, JSPlatform)
         "io.taig" %%% "testf-auto" % TestfVersion % "test" ::
         "io.taig" %%% "testf-runner-sbt" % TestfVersion % "test" ::
         Nil,
+    resolvers += Resolver.sonatypeRepo("snapshots"),
     testFrameworks += new TestFramework("io.taig.testf.runner.TestF")
   )
