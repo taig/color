@@ -1,7 +1,8 @@
 package io.taig.color
 
-import scala.language.experimental.macros
 import scala.reflect.macros.blackbox
+
+import com.github.ghik.silencer.silent
 
 object implicits {
   implicit class ColorInterpolator(val context: StringContext) extends AnyVal {
@@ -9,6 +10,7 @@ object implicits {
   }
 
   object ColorInterpolator {
+    @silent
     def rgb_impl(
         context: blackbox.Context
     )(arguments: context.Expr[Any]*): context.Expr[Color] = {
