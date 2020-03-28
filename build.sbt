@@ -27,6 +27,5 @@ lazy val core = crossProject(JVMPlatform, JSPlatform)
         "io.taig" %%% "testf-auto" % TestfVersion % "test" ::
         "io.taig" %%% "testf-runner-sbt" % TestfVersion % "test" ::
         Nil,
-    resolvers += Resolver.sonatypeRepo("snapshots"),
     testFrameworks += new TestFramework("io.taig.testf.runner.TestF")
   )
