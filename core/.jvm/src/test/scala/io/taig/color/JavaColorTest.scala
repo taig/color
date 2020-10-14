@@ -1,14 +1,11 @@
 package io.taig.color
 
-import io.taig.color.dsl._
-import io.taig.testf._
-import io.taig.testf.{AutoTest, IOAutoTestApp}
+import munit.FunSuite
+import io.taig.color.implicits._
 
-@AutoTest
-object JavaColorTest extends IOAutoTestApp {
-  test("toAwt / fromAwt") {
-    test("#FFAACC33") {
-      fromRight(Color.parseHex("#FFAACC33")).flatMap { color => isEqual(color)(Color.fromAwt(color.toAwt)) }
-    }
+final class JavaColorTest extends FunSuite {
+  test("toAwt / fromAwt round-trip") {
+    val color = rgb"#FFAACC33"
+    assertEquals(obtained = Color.fromAwt(color.toAwt), expected = color)
   }
 }

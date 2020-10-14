@@ -1,17 +1,14 @@
 package io.taig.color
 
-import io.taig.color.dsl._
 import io.taig.color.implicits._
-import io.taig.testf._
-import io.taig.testf.{AutoTest, IOAutoTestApp}
+import munit.FunSuite
 
-@AutoTest
-object ColorInterpolatorTest extends IOAutoTestApp {
+final class ColorInterpolatorTest extends FunSuite {
   test("#000") {
-    isEqual(rgb"#000")(Color.Black)
+    assertEquals(expected = Color.Black, obtained = rgb"#000")
   }
 
   test("#FFF") {
-    isEqual(rgb"#FFF")(Color.White)
+    assertEquals(expected = Color.White, obtained = rgb"#FFF")
   }
 }

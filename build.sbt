@@ -1,7 +1,7 @@
 import sbtcrossproject.CrossPlugin.autoImport.{crossProject, CrossType}
 
 val SilencerVersion = "1.7.1"
-val TestfVersion = "0.1.4"
+val MunitVersion = "0.7.14"
 
 lazy val color = project
   .settings(noPublishSettings)
@@ -22,9 +22,11 @@ lazy val core = crossProject(JVMPlatform, JSPlatform)
       compilerPlugin("com.github.ghik" % "silencer-plugin" % SilencerVersion cross CrossVersion.full) ::
         ("com.github.ghik" % "silencer-lib" % SilencerVersion % "provided" cross CrossVersion.full) ::
         "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided" ::
-        "io.taig" %%% "testf-auto" % TestfVersion % "test" ::
-        "io.taig" %%% "testf-runner-sbt" % TestfVersion % "test" ::
+        "org.scalameta" %%% "munit" % MunitVersion % "test" ::
         Nil,
     name := "color-core",
-    testFrameworks += new TestFramework("io.taig.testf.runner.TestF")
+    testFrameworks += new TestFramework("munit.Framework")
+  )
+  .jsSettings(
+    scalaJSLinkerConfig ~= (_.withModuleKind(ModuleKind.CommonJSModule))
   )
