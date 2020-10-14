@@ -78,8 +78,7 @@ object Color {
     * `0x00000F` or even `0x0000000F`.
     */
   def fromHex(value: Long, digits: Int): Either[String, Color] = {
-    val channel: Long => Channel = value =>
-      Channel.unsafeFromUnsignedShort(value.toShort)
+    val channel: Long => Channel = value => Channel.unsafeFromUnsignedShort(value.toShort)
 
     if (value < 0x00 || value > 0XFFFFFFFFL)
       Left("Color value must be between 0x00000000 and 0xFFFFFFFF")

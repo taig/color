@@ -8,9 +8,7 @@ import io.taig.testf.{AutoTest, IOAutoTestApp}
 object JavaColorTest extends IOAutoTestApp {
   test("toAwt / fromAwt") {
     test("#FFAACC33") {
-      fromRight(Color.parseHex("#FFAACC33")).flatMap { color =>
-        isEqual(color)(Color.fromAwt(color.toAwt))
-      }
+      fromRight(Color.parseHex("#FFAACC33")).flatMap { color => isEqual(color)(Color.fromAwt(color.toAwt)) }
     }
   }
 }

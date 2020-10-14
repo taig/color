@@ -11,25 +11,18 @@ object implicits {
 
   object ColorInterpolator {
     @silent
-    def rgb_impl(
-        context: blackbox.Context
-    )(arguments: context.Expr[Any]*): context.Expr[Color] = {
+    def rgb_impl(context: blackbox.Context)(arguments: context.Expr[Any]*): context.Expr[Color] = {
       import context.universe._
 
       context.prefix.tree match {
-        case Apply(
-            _,
-            List(Apply(_, List(literal @ Literal(Constant(value: String)))))
-            ) =>
+        case Apply(_, List(Apply(_, List(literal @ Literal(Constant(value: String)))))) =>
           Color.parseHex(value) match {
             case Right(_) =>
               val expression: context.Expr[String] = context.Expr(literal)
               reify(Color.unsafeParseHex(expression.splice))
-            case Left(value) =>
-              context.abort(context.enclosingPosition, value)
+            case Left(value) => context.abort(context.enclosingPosition, value)
           }
-        case _ =>
-          context.abort(context.enclosingPosition, "Invalid color value")
+        case _ => context.abort(context.enclosingPosition, "Invalid color value")
       }
     }
   }
