@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.2
+
+_2020-10-14_
+
+ * Migrate test suite to munit
+ * Upgrade to sbt-houserules 0.3.0
+ * Upgrade to sbt 1.4.0
+ * Upgrade to scala 2.12.12
+ * Upgrade to scala 2.13.3
+
 ## 0.2.1
 
 _2020-03-28_
