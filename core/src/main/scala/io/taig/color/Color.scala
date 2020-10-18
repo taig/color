@@ -20,6 +20,13 @@ final case class Color(
   def isOpaque: Boolean = alpha == Channel.MaxValue
   def isTransparent: Boolean = alpha == Channel.MinValue
 
+  def darken(factor: Float = 0.75f): Color = Color(
+    red = Channel(Math.round(red.raw * factor).toByte),
+    green = Channel(Math.round(green.raw * factor).toByte),
+    blue = Channel(Math.round(blue.raw * factor).toByte),
+    alpha
+  )
+
   /** Print the color as a hex string */
   def toHex: String =
     if (isOpaque) f"#${red.value}%02x${green.value}%02x${blue.value}%02x"
