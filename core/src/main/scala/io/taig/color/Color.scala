@@ -20,12 +20,36 @@ final case class Color(
   def isOpaque: Boolean = alpha == Channel.MaxValue
   def isTransparent: Boolean = alpha == Channel.MinValue
 
-  def darken(factor: Float = 0.75f): Color = Color(
-    red = Channel(Math.round(red.raw * factor).toByte),
-    green = Channel(Math.round(green.raw * factor).toByte),
-    blue = Channel(Math.round(blue.raw * factor).toByte),
+  def darker(factor: Double = 0.7d): Color = Color(
+    red = Channel.unsafeFromUnsignedInt((red.value * factor).toInt),
+    green = Channel.unsafeFromUnsignedInt((green.value * factor).toInt),
+    blue = Channel.unsafeFromUnsignedInt((blue.value * factor).toInt),
     alpha
   )
+
+  def brighter(factor: Double = 0.7d): Color = {
+    var red = this.red.value
+    var green = this.green.value
+    var blue = this.blue.value
+
+    val i = (1.0 / 1.0 - factor).toInt
+
+    if (red == 0 && green == 0 && blue == 0) {
+      val channel = Channel.unsafeFromUnsignedInt(i)
+      Color(channel, channel, channel, alpha)
+    } else {
+      if (red > 0 && red < i) red = i
+      if (green > 0 && green < i) green = i
+      if (blue > 0 && blue < i) blue = i
+
+      Color(
+        Channel.unsafeFromUnsignedInt(math.min((red / factor).toInt, 255)),
+        Channel.unsafeFromUnsignedInt(math.min((green / factor).toInt, 255)),
+        Channel.unsafeFromUnsignedInt(math.min((blue / factor).toInt, 255)),
+        alpha
+      )
+    }
+  }
 
   /** Print the color as a hex string */
   def toHex: String =

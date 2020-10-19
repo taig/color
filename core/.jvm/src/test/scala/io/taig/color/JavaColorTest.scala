@@ -8,4 +8,14 @@ final class JavaColorTest extends FunSuite {
     val color = rgb"#FFAACC33"
     assertEquals(obtained = Color.fromAwt(color.toAwt), expected = color)
   }
+
+  test("darker") {
+    val color = rgb"#FFAACC33"
+    assertEquals(obtained = color.darker().toAwt, color.toAwt.darker())
+  }
+
+  test("brighter") {
+    val color = rgb"#FFAACC33"
+    assertEquals(obtained = color.brighter().toAwt, color.toAwt.brighter())
+  }
 }
