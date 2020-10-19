@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.3
+
+_2020-10-19_
+
+ * Add `Color.brighter` and `Color.darker` methods
+ * Upgrade to sbt-scalajs 1.3.0
+
 ## 0.2.2
 
 _2020-10-14_
