@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.0
+
+_2020-12-21_
+
+ * Rename `rgb` interpolator to `hex`
+ * Upgrade to scala 2.13.4
+ * Upgrade to munit 0.7.20
+ * Upgrade to sbt-houserules 0.3.2
+ * Upgrade to sbt-scalajs 1.3.1
+ * Upgrade to sbt 1.4.5
+
 ## 0.2.3
 
 _2020-10-19_
