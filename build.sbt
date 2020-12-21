@@ -1,7 +1,7 @@
 import sbtcrossproject.CrossPlugin.autoImport.{crossProject, CrossType}
 
 val SilencerVersion = "1.7.1"
-val MunitVersion = "0.7.18"
+val MunitVersion = "0.7.20"
 
 lazy val color = project
   .settings(noPublishSettings)
