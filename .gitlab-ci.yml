@@ -40,24 +40,17 @@ dependencies:
 formatting:
   stage: test
   image: $IMAGE:latest
-  script:
-    - $SBT scalafmtCheckAll
+  script: $SBT scalafmtCheckAll
 
 unit tests:
   stage: test
   image: $IMAGE:latest
-  script:
-    - $SBT +test +publishLocal
-  artifacts:
-    expire_in: 1 month
-    paths:
-      - coverage/
+  script: $SBT +test +publishLocal
 
 artifacts:
   stage: deploy
   image: $IMAGE:latest
+  script: $SBT publishAndRelease
   only:
     - master
     - tags
-  script:
-    - $SBT publishAndRelease
