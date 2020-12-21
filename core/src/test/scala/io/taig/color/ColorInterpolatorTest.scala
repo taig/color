@@ -5,10 +5,12 @@ import munit.FunSuite
 
 final class ColorInterpolatorTest extends FunSuite {
   test("#000") {
-    assertEquals(expected = Color.Black, obtained = rgb"#000")
+    assertEquals(expected = Color.Black, obtained = hex"#000")
+    assertEquals(expected = Color.Black, obtained = hex"000")
   }
 
   test("#FFF") {
-    assertEquals(expected = Color.White, obtained = rgb"#FFF")
+    assertEquals(expected = Color.White, obtained = hex"#FFF")
+    assertEquals(expected = Color.White, obtained = hex"FFF")
   }
 }

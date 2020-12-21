@@ -6,13 +6,13 @@ import munit.FunSuite
 final class ColorTest extends FunSuite {
   test("fromHex") {
     assert(Color.fromHex(0x00 - 1, digits = 8).isLeft)
-    assert(Color.fromHex(0XFFFFFFFFFL + 1, digits = 8).isLeft)
-    assert(Color.fromHex(0xFFFFFF, digits = 0).isLeft)
-    assert(Color.fromHex(0xFFFFFF, digits = 1).isLeft)
-    assert(Color.fromHex(0xFFFFFF, digits = 2).isLeft)
-    assert(Color.fromHex(0xFFFFFF, digits = 5).isLeft)
-    assert(Color.fromHex(0xFFFFFF, digits = 7).isLeft)
-    assert(Color.fromHex(0xFFFFFF, digits = 9).isLeft)
+    assert(Color.fromHex(0xfffffffffL + 1, digits = 8).isLeft)
+    assert(Color.fromHex(0xffffff, digits = 0).isLeft)
+    assert(Color.fromHex(0xffffff, digits = 1).isLeft)
+    assert(Color.fromHex(0xffffff, digits = 2).isLeft)
+    assert(Color.fromHex(0xffffff, digits = 5).isLeft)
+    assert(Color.fromHex(0xffffff, digits = 7).isLeft)
+    assert(Color.fromHex(0xffffff, digits = 9).isLeft)
   }
 
   test("parseHex") {

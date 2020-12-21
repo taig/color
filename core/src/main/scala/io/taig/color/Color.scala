@@ -111,29 +111,29 @@ object Color {
   def fromHex(value: Long, digits: Int): Either[String, Color] = {
     val channel: Long => Channel = value => Channel.unsafeFromUnsignedShort(value.toShort)
 
-    if (value < 0x00 || value > 0XFFFFFFFFL)
+    if (value < 0x00 || value > 0xffffffffL)
       Left("Color value must be between 0x00000000 and 0xFFFFFFFF")
     else if (digits == 3) {
-      val red = channel(((value & 0xFFF) >> 8) * 17)
-      val green = channel(((value & 0xFF) >> 4) * 17)
-      val blue = channel((value & 0xF) * 17)
+      val red = channel(((value & 0xfff) >> 8) * 17)
+      val green = channel(((value & 0xff) >> 4) * 17)
+      val blue = channel((value & 0xf) * 17)
       Right(opaque(red, green, blue))
     } else if (digits == 4) {
-      val red = channel(((value & 0xFFFF) >> 12) * 17)
-      val green = channel(((value & 0xFFF) >> 8) * 17)
-      val blue = channel(((value & 0xFF) >> 4) * 17)
-      val alpha = channel((value & 0xF) * 17)
+      val red = channel(((value & 0xffff) >> 12) * 17)
+      val green = channel(((value & 0xfff) >> 8) * 17)
+      val blue = channel(((value & 0xff) >> 4) * 17)
+      val alpha = channel((value & 0xf) * 17)
       Right(Color(red, green, blue, alpha))
     } else if (digits == 6) {
-      val red = channel((value & 0xFFFFFF) >> 16)
-      val green = channel((value & 0xFFFF) >> 8)
-      val blue = channel(value & 0xFF)
+      val red = channel((value & 0xffffff) >> 16)
+      val green = channel((value & 0xffff) >> 8)
+      val blue = channel(value & 0xff)
       Right(opaque(red, green, blue))
     } else if (digits == 8) {
-      val red = channel((value & 0xFFFFFFFF) >> 24)
-      val green = channel((value & 0xFFFFFF) >> 16)
-      val blue = channel((value & 0xFFFF) >> 8)
-      val alpha = channel(value & 0xFF)
+      val red = channel((value & 0xffffffff) >> 24)
+      val green = channel((value & 0xffffff) >> 16)
+      val blue = channel((value & 0xffff) >> 8)
+      val alpha = channel(value & 0xff)
       Right(Color(red, green, blue, alpha))
     } else {
       val message = "Color value can only have 6 (rgba), 8 (rgba), 3 (rgb " +
@@ -142,8 +142,7 @@ object Color {
     }
   }
 
-  /**
-    * Parse a hexadecimal `String` to a `Color`
+  /** Parse a hexadecimal `String` to a `Color`
     *
     * The input `String` may start with a `#`.
     */

@@ -6,6 +6,9 @@ import com.github.ghik.silencer.silent
 
 object implicits {
   implicit class ColorInterpolator(val context: StringContext) extends AnyVal {
+    def hex(arguments: Any*): Color = macro ColorInterpolator.rgb_impl
+
+    @deprecated("Use hex instead", "0.3.0")
     def rgb(arguments: Any*): Color = macro ColorInterpolator.rgb_impl
   }
 
