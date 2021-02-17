@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.1
+
+_2021-02-17_
+
+ * Cross-build with scala 3 (RC1) support (#1)
+ * Upgrade to sbt-houserules 0.3.4
+ * Upgrade to sbt-scalajs 1.5.0
+ * Upgrade to munit 0.7.21
+ * Upgrade to sbt 1.4.7
+
 ## 0.3.0
 
 _2020-12-21_
