@@ -1,7 +1,6 @@
 package io.taig.color
 
 import munit.FunSuite
-import io.taig.color.implicits._
 
 final class JavaColorTest extends FunSuite {
   test("toAwt / fromAwt round-trip") {
