@@ -59,4 +59,32 @@ final class ColorTest extends FunSuite {
     assertEqualsFloat(obtained = Color.Black.contrast(Color.White), expected = 21f, delta = 0.03f)
     assertEqualsFloat(obtained = Color.White.contrast(Color.unsafeParseHex("#ff0000")), expected = 4f, delta = 0.03f)
   }
+
+  test("over") {
+    assertEquals(obtained = Color.White.over(Color.White), expected = Color.White)
+    assertEquals(obtained = Color.Black.over(Color.Black), expected = Color.Black)
+    assertEquals(obtained = Color.Black.transparent.over(Color.White), expected = Color.White)
+  }
+
+  test("over with alpha blending") {
+    val background = Color(
+      red = Channel.unsafeFromInt(255),
+      green = Channel.unsafeFromInt(110),
+      blue = Channel.unsafeFromInt(40),
+      alpha = Channel.fromScale(0.7f)
+    )
+    val foreground = Color(
+      red = Channel.unsafeFromInt(220),
+      green = Channel.unsafeFromInt(170),
+      blue = Channel.unsafeFromInt(100),
+      alpha = Channel.fromScale(0.5f)
+    )
+    val expected = Color(
+      red = Channel.unsafeFromInt(234),
+      green = Channel.unsafeFromInt(145),
+      blue = Channel.unsafeFromInt(75),
+      alpha = Channel.fromScale(0.85f)
+    )
+    assertEquals(obtained = foreground.over(background), expected)
+  }
 }

@@ -5,9 +5,9 @@ val MunitVersion = "0.7.22"
 
 noPublishSettings
 
-ThisBuild / crossScalaVersions := List("2.12.13", "2.13.5", scalaVersion.value)
+ThisBuild / crossScalaVersions := List("2.12.13", scalaVersion.value, "3.0.0-RC1")
 ThisBuild / scalafmtRules += """project.excludeFilters = [ "/scala-3/" ]""".stripMargin
-ThisBuild / scalaVersion := "3.0.0-RC1"
+ThisBuild / scalaVersion := "2.13.5"
 ThisBuild / testFrameworks += new TestFramework("munit.Framework")
 
 lazy val core = crossProject(JVMPlatform, JSPlatform)
@@ -17,12 +17,9 @@ lazy val core = crossProject(JVMPlatform, JSPlatform)
     initialCommands in console +=
       """import io.taig.color._
         |import io.taig.color.implicits._""".stripMargin,
-    libraryDependencies ++=
-      "org.scalameta" %%% "munit" % MunitVersion % "test" ::
-        Nil,
+    libraryDependencies += "org.scalameta" %%% "munit" % MunitVersion % "test",
     libraryDependencies ++= {
-      if (isDotty.value) Nil
-      else "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided" :: Nil
+      if (isDotty.value) Nil else "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided" :: Nil
     },
     name := "color-core",
     Compile / unmanagedSourceDirectories ++= {

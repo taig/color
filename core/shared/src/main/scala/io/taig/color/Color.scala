@@ -65,6 +65,28 @@ final case class Color(
     if (left > right) left / right else right / left
   }
 
+  /** Lay this `Color` on top of the given `Color` and calculate a combination simple blending is this `Color` is not
+    * opaque
+    *
+    * @see https://gist.github.com/JordanDelcros/518396da1c13f75ee057
+    */
+  def over(color: Color): Color = {
+    if (alpha == Channel.MaxValue) this
+    else if (alpha == Channel.MinValue) color
+    else {
+      val factor = 1 - (1 - alpha.scaled) * (1 - color.alpha.scaled)
+      val foreground = alpha.scaled / factor
+      val background = color.alpha.scaled * (1 - alpha.scaled) / factor
+
+      Color(
+        red = Channel.unsafeFromInt(math.round(red.value * foreground + color.red.value * background)),
+        green = Channel.unsafeFromInt(math.round(green.value * foreground + color.green.value * background)),
+        blue = Channel.unsafeFromInt(math.round(blue.value * foreground + color.blue.value * background)),
+        alpha = Channel.unsafeFromInt((255 * factor).toInt)
+      )
+    }
+  }
+
   /** Print the color as a hex string */
   def toHex: String =
     if (isOpaque) f"#${red.value}%02x${green.value}%02x${blue.value}%02x"
