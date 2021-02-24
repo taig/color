@@ -21,9 +21,9 @@ final case class Color(
   def isTransparent: Boolean = alpha == Channel.MinValue
 
   def darker(factor: Double = 0.7d): Color = Color(
-    red = Channel.unsafeFromUnsignedInt((red.value * factor).toInt),
-    green = Channel.unsafeFromUnsignedInt((green.value * factor).toInt),
-    blue = Channel.unsafeFromUnsignedInt((blue.value * factor).toInt),
+    red = Channel.unsafeFromInt((red.value * factor).toInt),
+    green = Channel.unsafeFromInt((green.value * factor).toInt),
+    blue = Channel.unsafeFromInt((blue.value * factor).toInt),
     alpha
   )
 
@@ -35,7 +35,7 @@ final case class Color(
     val i = (1.0 / 1.0 - factor).toInt
 
     if (red == 0 && green == 0 && blue == 0) {
-      val channel = Channel.unsafeFromUnsignedInt(i)
+      val channel = Channel.unsafeFromInt(i)
       Color(channel, channel, channel, alpha)
     } else {
       if (red > 0 && red < i) red = i
@@ -43,9 +43,9 @@ final case class Color(
       if (blue > 0 && blue < i) blue = i
 
       Color(
-        Channel.unsafeFromUnsignedInt(math.min((red / factor).toInt, 255)),
-        Channel.unsafeFromUnsignedInt(math.min((green / factor).toInt, 255)),
-        Channel.unsafeFromUnsignedInt(math.min((blue / factor).toInt, 255)),
+        Channel.unsafeFromInt(math.min((red / factor).toInt, 255)),
+        Channel.unsafeFromInt(math.min((green / factor).toInt, 255)),
+        Channel.unsafeFromInt(math.min((blue / factor).toInt, 255)),
         alpha
       )
     }
@@ -56,7 +56,7 @@ final case class Color(
     * @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/Understanding_Colors_and_Luminance#measuring_relative_luminance
     */
   def luminance: Channel =
-    Channel.unsafeFromUnsignedInt(math.round(0.2126f * red.value + 0.7152f * green.value + 0.0722f * blue.value))
+    Channel.unsafeFromInt(math.round(0.2126f * red.value + 0.7152f * green.value + 0.0722f * blue.value))
 
   /** Calculate a contrast value between 0.0 (minimum contrast) and 21.0 (maximum contrast) */
   def contrast(color: Color): Float = {
@@ -87,10 +87,10 @@ object Color {
     Color(red, green, blue, Channel.MaxValue)
 
   def fromAwt(color: JColor): Color = Color(
-    Channel.unsafeFromUnsignedInt(color.getRed),
-    Channel.unsafeFromUnsignedInt(color.getGreen),
-    Channel.unsafeFromUnsignedInt(color.getBlue),
-    Channel.unsafeFromUnsignedInt(color.getAlpha)
+    Channel.unsafeFromInt(color.getRed),
+    Channel.unsafeFromInt(color.getGreen),
+    Channel.unsafeFromInt(color.getBlue),
+    Channel.unsafeFromInt(color.getAlpha)
   )
 
   /** Convert a (hexadecimal) number to a `Color`
@@ -114,7 +114,7 @@ object Color {
     * `0x00000F` or even `0x0000000F`.
     */
   def fromHex(value: Long, digits: Int): Either[String, Color] = {
-    val channel: Long => Channel = value => Channel.unsafeFromUnsignedShort(value.toShort)
+    val channel: Long => Channel = value => Channel.unsafeFromInt(value.toInt)
 
     if (value < 0x00 || value > 0xffffffffL)
       Left("Color value must be between 0x00000000 and 0xFFFFFFFF")
@@ -159,12 +159,9 @@ object Color {
       .flatMap(fromHex(_, digits))
   }
 
-  def unsafeParseHex(value: String): Color =
-    parseHex(value).getOrElse(throw new IllegalArgumentException)
+  def unsafeParseHex(value: String): Color = parseHex(value).getOrElse(throw new IllegalArgumentException)
 
-  val Black: Color =
-    opaque(Channel.MinValue, Channel.MinValue, Channel.MinValue)
+  val Black: Color = opaque(Channel.MinValue, Channel.MinValue, Channel.MinValue)
 
-  val White: Color =
-    opaque(Channel.MaxValue, Channel.MaxValue, Channel.MaxValue)
+  val White: Color = opaque(Channel.MaxValue, Channel.MaxValue, Channel.MaxValue)
 }

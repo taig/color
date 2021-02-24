@@ -47,8 +47,8 @@ final class ColorTest extends FunSuite {
     assertEquals(obtained = Color.White.luminance, expected = Channel.MaxValue)
     assertEquals(obtained = Color.Black.luminance, expected = Channel.MinValue)
     assertEquals(
-      obtained = Color.opaque(Channel.unsafeFromUnsignedInt(255), Channel.MinValue, Channel.MinValue).luminance,
-      expected = Channel.unsafeFromUnsignedInt(54)
+      obtained = Color.opaque(Channel.unsafeFromInt(255), Channel.MinValue, Channel.MinValue).luminance,
+      expected = Channel.unsafeFromInt(54)
     )
   }
 
