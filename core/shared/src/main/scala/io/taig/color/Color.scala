@@ -51,11 +51,24 @@ final case class Color(
     }
   }
 
+  /** Calculate a luminance value between 0 and 255
+    *
+    * @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/Understanding_Colors_and_Luminance#measuring_relative_luminance
+    */
+  def luminance: Channel =
+    Channel.unsafeFromUnsignedInt(math.round(0.2126f * red.value + 0.7152f * green.value + 0.0722f * blue.value))
+
+  /** Calculate a contrast value between 0.0 (minimum contrast) and 21.0 (maximum contrast) */
+  def contrast(color: Color): Float = {
+    val left = luminance.value / 255f + 0.05f
+    val right = color.luminance.value / 255f + 0.05f
+    if (left > right) left / right else right / left
+  }
+
   /** Print the color as a hex string */
   def toHex: String =
     if (isOpaque) f"#${red.value}%02x${green.value}%02x${blue.value}%02x"
-    else
-      f"#${red.value}%02x${green.value}%02x${blue.value}%02x${alpha.value}%02x"
+    else f"#${red.value}%02x${green.value}%02x${blue.value}%02x${alpha.value}%02x"
 
   /** Print the color a rgb or rgba string */
   def toRgb: String = toRgbX(color => String.valueOf(color.value))
@@ -63,18 +76,10 @@ final case class Color(
   def toRgb_% : String = toRgbX(color => String.valueOf(color.%))
 
   private def toRgbX(render: Channel => String): String =
-    if (isOpaque)
-      "rgb(" + render(red) + ", " +
-        render(green) + ", " +
-        render(blue) + ")"
-    else
-      "rgba(" + render(red) + ", " +
-        render(green) + ", " +
-        render(blue) + ", " +
-        render(alpha) + ")"
+    if (isOpaque) "rgb(" + render(red) + ", " + render(green) + ", " + render(blue) + ")"
+    else "rgba(" + render(red) + ", " + render(green) + ", " + render(blue) + ", " + render(alpha) + ")"
 
-  def toAwt: JColor =
-    new JColor(red.value, green.value, blue.value, alpha.value)
+  def toAwt: JColor = new JColor(red.value, green.value, blue.value, alpha.value)
 }
 
 object Color {

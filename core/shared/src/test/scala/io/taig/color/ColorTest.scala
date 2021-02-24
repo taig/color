@@ -42,4 +42,21 @@ final class ColorTest extends FunSuite {
     assertEquals(obtained = Color.Black.toRgb, expected = "rgb(0, 0, 0)")
     assertEquals(obtained = Color.Black.transparent.toRgb, expected = "rgba(0, 0, 0, 0)")
   }
+
+  test("luminance") {
+    assertEquals(obtained = Color.White.luminance, expected = Channel.MaxValue)
+    assertEquals(obtained = Color.Black.luminance, expected = Channel.MinValue)
+    assertEquals(
+      obtained = Color.opaque(Channel.unsafeFromUnsignedInt(255), Channel.MinValue, Channel.MinValue).luminance,
+      expected = Channel.unsafeFromUnsignedInt(54)
+    )
+  }
+
+  test("contrast") {
+    assertEqualsFloat(obtained = Color.White.contrast(Color.White), expected = 1f, delta = 0.03f)
+    assertEqualsFloat(obtained = Color.Black.contrast(Color.Black), expected = 1f, delta = 0.03f)
+    assertEqualsFloat(obtained = Color.White.contrast(Color.Black), expected = 21f, delta = 0.03f)
+    assertEqualsFloat(obtained = Color.Black.contrast(Color.White), expected = 21f, delta = 0.03f)
+    assertEqualsFloat(obtained = Color.White.contrast(Color.unsafeParseHex("#ff0000")), expected = 4f, delta = 0.03f)
+  }
 }
