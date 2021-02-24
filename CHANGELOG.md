@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.1
+
+_2021-02-24_
+
+ * Add `Color.over` method to alpha-blend two colors
+
 ## 0.4.0
 
 _2021-02-24_
