@@ -5,7 +5,7 @@ val MunitVersion = "0.7.22"
 
 noPublishSettings
 
-ThisBuild / crossScalaVersions := List("2.12.12", "2.13.4", scalaVersion.value)
+ThisBuild / crossScalaVersions := List("2.12.13", "2.13.5", scalaVersion.value)
 ThisBuild / scalafmtRules += """project.excludeFilters = [ "/scala-3/" ]""".stripMargin
 ThisBuild / scalaVersion := "3.0.0-RC1"
 ThisBuild / testFrameworks += new TestFramework("munit.Framework")
@@ -22,11 +22,7 @@ lazy val core = crossProject(JVMPlatform, JSPlatform)
         Nil,
     libraryDependencies ++= {
       if (isDotty.value) Nil
-      else
-        compilerPlugin("com.github.ghik" % "silencer-plugin" % SilencerVersion cross CrossVersion.full) ::
-          ("com.github.ghik" % "silencer-lib" % SilencerVersion % "provided" cross CrossVersion.full) ::
-          "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided" ::
-          Nil
+      else "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided" :: Nil
     },
     name := "color-core",
     Compile / unmanagedSourceDirectories ++= {

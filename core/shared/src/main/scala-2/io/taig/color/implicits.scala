@@ -1,8 +1,7 @@
 package io.taig.color
 
+import scala.annotation.nowarn
 import scala.reflect.macros.blackbox
-
-import com.github.ghik.silencer.silent
 
 object implicits {
   implicit class ColorInterpolator(val context: StringContext) extends AnyVal {
@@ -13,7 +12,7 @@ object implicits {
   }
 
   object ColorInterpolator {
-    @silent
+    @nowarn("msg=never used")
     def apply(context: blackbox.Context)(arguments: context.Expr[Any]*): context.Expr[Color] = {
       import context.universe._
 
