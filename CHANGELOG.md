@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.0
+
+_2021-02-24_
+
+ * Add `Color.luminance` and `Color.contrast` methods
+ * Improve `Channel` builder method names
+ * Remove deprecated `rgb` interpolator
+ * Upgrade to scala 2.12.13 and 2.13.5
+
 ## 0.3.1
 
 _2021-02-17_
