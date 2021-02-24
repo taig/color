@@ -5,9 +5,6 @@ import scala.quoted._
 object implicits {
   implicit class ColorInterpolator(val context: StringContext) extends AnyVal {
     inline def hex(arguments: Any*): Color = ${ColorInterpolator('context, 'arguments)}
-
-    @deprecated("Use hex instead", "0.3.0")
-    inline def rgb(arguments: Any*): Color = ${ColorInterpolator('context, 'arguments)}
   }
 
   object ColorInterpolator {

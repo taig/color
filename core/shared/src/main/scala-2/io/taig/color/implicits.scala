@@ -6,9 +6,6 @@ import scala.reflect.macros.blackbox
 object implicits {
   implicit class ColorInterpolator(val context: StringContext) extends AnyVal {
     def hex(arguments: Any*): Color = macro ColorInterpolator.apply
-
-    @deprecated("Use hex instead", "0.3.0")
-    def rgb(arguments: Any*): Color = macro ColorInterpolator.apply
   }
 
   object ColorInterpolator {
