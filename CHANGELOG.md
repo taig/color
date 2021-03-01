@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.2
+
+_2021-03-01_
+
+ * Fix luminance and contrast calculations
+
 ## 0.4.1
 
 _2021-02-24_
