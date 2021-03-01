@@ -44,20 +44,23 @@ final class ColorTest extends FunSuite {
   }
 
   test("luminance") {
-    assertEquals(obtained = Color.White.luminance, expected = Channel.MaxValue)
-    assertEquals(obtained = Color.Black.luminance, expected = Channel.MinValue)
-    assertEquals(
-      obtained = Color.opaque(Channel.unsafeFromInt(255), Channel.MinValue, Channel.MinValue).luminance,
-      expected = Channel.unsafeFromInt(54)
-    )
+    assertEquals(obtained = Color.White.luminance, expected = 1.0)
+    assertEquals(obtained = Color.Black.luminance, expected = 0.0)
+    assertEqualsDouble(obtained = Color.unsafeParseHex("#1976d2").luminance, expected = 0.1782, delta = 0.01d)
   }
 
   test("contrast") {
-    assertEqualsFloat(obtained = Color.White.contrast(Color.White), expected = 1f, delta = 0.03f)
-    assertEqualsFloat(obtained = Color.Black.contrast(Color.Black), expected = 1f, delta = 0.03f)
-    assertEqualsFloat(obtained = Color.White.contrast(Color.Black), expected = 21f, delta = 0.03f)
-    assertEqualsFloat(obtained = Color.Black.contrast(Color.White), expected = 21f, delta = 0.03f)
-    assertEqualsFloat(obtained = Color.White.contrast(Color.unsafeParseHex("#ff0000")), expected = 4f, delta = 0.03f)
+    assertEqualsDouble(obtained = Color.White.contrast(Color.White), expected = 1d, delta = 0.01d)
+    assertEqualsDouble(obtained = Color.Black.contrast(Color.Black), expected = 1d, delta = 0.01d)
+    assertEqualsDouble(obtained = Color.White.contrast(Color.Black), expected = 21d, delta = 0.01d)
+    assertEqualsDouble(obtained = Color.Black.contrast(Color.White), expected = 21d, delta = 0.01d)
+    assertEqualsDouble(obtained = Color.White.contrast(Color.unsafeParseHex("#ff0000")), expected = 4d, delta = 0.01d)
+    assertEqualsDouble(obtained = Color.White.contrast(Color.unsafeParseHex("#1976d2")), expected = 4.6d, delta = 0.01d)
+    assertEqualsDouble(
+      obtained = Color.Black.contrast(Color.unsafeParseHex("#1976d2")),
+      expected = 4.56d,
+      delta = 0.01d
+    )
   }
 
   test("over") {

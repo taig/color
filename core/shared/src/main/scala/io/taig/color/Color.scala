@@ -51,17 +51,16 @@ final case class Color(
     }
   }
 
-  /** Calculate a luminance value between 0 and 255
+  /** Calculate a luminance value between 0.0 and 1.0
     *
     * @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/Understanding_Colors_and_Luminance#measuring_relative_luminance
     */
-  def luminance: Channel =
-    Channel.unsafeFromInt(math.round(0.2126f * red.value + 0.7152f * green.value + 0.0722f * blue.value))
+  def luminance: Double = 0.2126 * red.linear + 0.7152 * green.linear + 0.0722 * blue.linear
 
   /** Calculate a contrast value between 0.0 (minimum contrast) and 21.0 (maximum contrast) */
-  def contrast(color: Color): Float = {
-    val left = luminance.value / 255f + 0.05f
-    val right = color.luminance.value / 255f + 0.05f
+  def contrast(color: Color): Double = {
+    val left = luminance + 0.05d
+    val right = color.luminance + 0.05d
     if (left > right) left / right else right / left
   }
 
@@ -79,9 +78,9 @@ final case class Color(
       val background = color.alpha.scaled * (1 - alpha.scaled) / factor
 
       Color(
-        red = Channel.unsafeFromInt(math.round(red.value * foreground + color.red.value * background)),
-        green = Channel.unsafeFromInt(math.round(green.value * foreground + color.green.value * background)),
-        blue = Channel.unsafeFromInt(math.round(blue.value * foreground + color.blue.value * background)),
+        red = Channel.unsafeFromInt((red.value * foreground + color.red.value * background).toInt),
+        green = Channel.unsafeFromInt((green.value * foreground + color.green.value * background).toInt),
+        blue = Channel.unsafeFromInt((blue.value * foreground + color.blue.value * background).toInt),
         alpha = Channel.unsafeFromInt((255 * factor).toInt)
       )
     }

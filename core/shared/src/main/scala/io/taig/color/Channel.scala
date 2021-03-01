@@ -3,8 +3,13 @@ package io.taig.color
 final case class Channel private (raw: Byte) extends AnyVal {
   def value: Int = raw - Byte.MinValue
 
-  /** Convert the value to a Float between 0.0 and 1.0 */
-  def scaled: Float = (1f / 0xff) * value
+  /** Convert the value to a Double between 0.0 and 1.0 */
+  def scaled: Double = (1d / 0xff) * value
+
+  def linear: Double = {
+    val scaled = this.scaled
+    if (scaled <= 0.03928) scaled / 12.92 else math.pow((scaled + 0.055) / 1.055, 2.4)
+  }
 
   /** Convert the value to a `String` with a numeric value between 0 and 100 and a `%`-sign */
   def % : String = s"${scaled * 100}%"
