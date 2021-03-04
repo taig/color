@@ -2,19 +2,12 @@ package io.taig.color
 
 import scala.quoted._
 
-object implicits {
-  implicit class ColorInterpolator(val context: StringContext) extends AnyVal {
-    inline def hex(arguments: Any*): Color = ${ColorInterpolator('context, 'arguments)}
-  }
+import io.taig.color.internal.Macros
 
-  object ColorInterpolator {
-    def apply(context: Expr[StringContext], arguments: Expr[Seq[Any]])(using Quotes): Expr[Color] = {
-      '{
-        Color.parseHex(${context}.s(${arguments}: _*)) match {
-          case Right(color) => color
-          case Left(error) => throw new RuntimeException(error)
-        }
-      }
-    }
+trait implicits {
+  implicit final class ColorInterpolator(val context: StringContext) {
+    inline def hex(arguments: Any*): Color = ${Macros.colorInterpolator('context, 'arguments)}
   }
 }
+
+object implicits extends implicits
