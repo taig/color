@@ -14,7 +14,7 @@ lazy val core = crossProject(JVMPlatform, JSPlatform)
   .crossType(CrossType.Full)
   .settings(sonatypePublishSettings)
   .settings(
-    initialCommands in console +=
+    console / initialCommands +=
       """import io.taig.color._
         |import io.taig.color.implicits._""".stripMargin,
     libraryDependencies += "org.scalameta" %%% "munit" % MunitVersion % "test",
