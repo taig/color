@@ -1,13 +1,17 @@
 import sbtcrossproject.CrossPlugin.autoImport.{crossProject, CrossType}
 
-val SilencerVersion = "1.7.1"
-val MunitVersion = "0.7.22"
+val Version = new {
+  val Munit = "0.7.22"
+  val Scala212 = "2.12.13"
+  val Scala213 = "2.13.5"
+  val Scala3 = "3.0.0-RC1"
+}
 
 noPublishSettings
 
-ThisBuild / crossScalaVersions := List("2.12.13", scalaVersion.value, "3.0.0-RC1")
+ThisBuild / crossScalaVersions := List(Version.Scala212, Version.Scala213, Version.Scala3)
 ThisBuild / scalafmtRules += """project.excludeFilters = [ "/scala-3/" ]""".stripMargin
-ThisBuild / scalaVersion := "2.13.5"
+ThisBuild / scalaVersion := Version.Scala213
 ThisBuild / testFrameworks += new TestFramework("munit.Framework")
 
 lazy val core = crossProject(JVMPlatform, JSPlatform)
@@ -17,7 +21,7 @@ lazy val core = crossProject(JVMPlatform, JSPlatform)
     console / initialCommands +=
       """import io.taig.color._
         |import io.taig.color.implicits._""".stripMargin,
-    libraryDependencies += "org.scalameta" %%% "munit" % MunitVersion % "test",
+    libraryDependencies += "org.scalameta" %%% "munit" % Version.Munit % "test",
     libraryDependencies ++= {
       if (isDotty.value) Nil else "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided" :: Nil
     },
