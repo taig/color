@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.3
+
+_2021-08-05_
+
+ * Upgrade to scala 3.0.1
+ * Upgrade to sbt 1.5.5
+
 ## 0.4.2
 
 _2021-03-01_
