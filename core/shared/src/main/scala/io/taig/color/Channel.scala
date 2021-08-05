@@ -24,8 +24,8 @@ object Channel {
 
   /** Create a `Channel` from an `Int` value between `0` and `255`
     *
-    * This method is unsafe in the sense that the underlying `Int` to `Byte`
-    * conversion may overflow. [[fromInt]] is a safe alternative.
+    * This method is unsafe in the sense that the underlying `Int` to `Byte` conversion may overflow. [[fromInt]] is a
+    * safe alternative.
     */
   def unsafeFromInt(value: Int): Channel = Channel((value + Byte.MinValue).toByte)
 
@@ -40,8 +40,7 @@ object Channel {
 
   /** Convert a `Float` value between `0.0` and `1.0` to a `Channel`
     *
-    * Values less than `0` are be treated as `0`, values bigger than `1` are
-    * treated as `1`.
+    * Values less than `0` are be treated as `0`, values bigger than `1` are treated as `1`.
     */
   def fromScale(value: Float): Channel = {
     val adjusted = math.min(math.max(0, value), 1)

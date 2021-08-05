@@ -1,7 +1,7 @@
 import sbtcrossproject.CrossPlugin.autoImport.{crossProject, CrossType}
 
 val Version = new {
-  val Munit = "0.7.22"
+  val Munit = "0.7.27"
   val Scala212 = "2.12.13"
   val Scala213 = "2.13.5"
   val Scala3 = "3.0.1"
@@ -23,18 +23,9 @@ lazy val core = crossProject(JVMPlatform, JSPlatform)
         |import io.taig.color.implicits._""".stripMargin,
     libraryDependencies += "org.scalameta" %%% "munit" % Version.Munit % "test",
     libraryDependencies ++= {
-      if (isDotty.value) Nil else "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided" :: Nil
+      if (scalaVersion.value == Version.Scala3) Nil
+      else "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided" :: Nil
     },
-    name := "color-core",
-    Compile / unmanagedSourceDirectories ++= {
-      def extraDirs(suffix: String) =
-        CrossType.Full.sharedSrcDir(baseDirectory.value, "main").toList.map(f => file(f.getPath + suffix))
-
-      CrossVersion.partialVersion(scalaVersion.value) match {
-        case Some((2, y)) => extraDirs("-2") ++ (if (y >= 13) extraDirs("-2.13+") else Nil)
-        case Some((3, _)) => extraDirs("-3") ++ extraDirs("-2.13+")
-        case _            => Nil
-      }
-    }
+    name := "color-core"
   )
   .jsSettings(scalaJSLinkerConfig ~= (_.withModuleKind(ModuleKind.CommonJSModule)))

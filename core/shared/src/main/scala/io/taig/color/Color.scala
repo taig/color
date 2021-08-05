@@ -53,7 +53,8 @@ final case class Color(
 
   /** Calculate a luminance value between 0.0 and 1.0
     *
-    * @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/Understanding_Colors_and_Luminance#measuring_relative_luminance
+    * @see
+    *   https://developer.mozilla.org/en-US/docs/Web/Accessibility/Understanding_Colors_and_Luminance#measuring_relative_luminance
     */
   def luminance: Double = 0.2126 * red.linear + 0.7152 * green.linear + 0.0722 * blue.linear
 
@@ -67,7 +68,8 @@ final case class Color(
   /** Lay this `Color` on top of the given `Color` and calculate a combination simple blending is this `Color` is not
     * opaque
     *
-    * @see https://gist.github.com/JordanDelcros/518396da1c13f75ee057
+    * @see
+    *   https://gist.github.com/JordanDelcros/518396da1c13f75ee057
     */
   def over(color: Color): Color = {
     if (alpha == Channel.MaxValue) this
@@ -116,8 +118,7 @@ object Color {
 
   /** Convert a (hexadecimal) number to a `Color`
     *
-    * Input values that are not within the `0x00000000 - 0xFFFFFFFF` range
-    * will be rejected.
+    * Input values that are not within the `0x00000000 - 0xFFFFFFFF` range will be rejected.
     *
     * This method should be used with hexadecimal number representations, e.g.:
     *
@@ -128,11 +129,9 @@ object Color {
     * fromHex(0xFF0000FF, digits = 8)
     * }}}
     *
-    * This method requires the amount of digits because hexadecimal color values
-    * should generally be represented as Strings, not numbers. This method will,
-    * for instance, accept `0xF` as input value but might misinterpret it
-    * without the explicit digits hint as it could mean `0x00F`, `0x000F`,
-    * `0x00000F` or even `0x0000000F`.
+    * This method requires the amount of digits because hexadecimal color values should generally be represented as
+    * Strings, not numbers. This method will, for instance, accept `0xF` as input value but might misinterpret it
+    * without the explicit digits hint as it could mean `0x00F`, `0x000F`, `0x00000F` or even `0x0000000F`.
     */
   def fromHex(value: Long, digits: Int): Either[String, Color] = {
     val channel: Long => Channel = value => Channel.unsafeFromInt(value.toInt)
