@@ -10,7 +10,6 @@ val Version = new {
 noPublishSettings
 
 ThisBuild / crossScalaVersions := List(Version.Scala212, Version.Scala213, Version.Scala3)
-ThisBuild / scalafmtRules += """project.excludeFilters = [ "/scala-3/" ]""".stripMargin
 ThisBuild / scalaVersion := Version.Scala213
 ThisBuild / testFrameworks += new TestFramework("munit.Framework")
 
