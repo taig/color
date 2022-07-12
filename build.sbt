@@ -27,4 +27,3 @@ lazy val core = crossProject(JVMPlatform, JSPlatform)
     },
     name := "color-core"
   )
-  .jsSettings(scalaJSLinkerConfig ~= (_.withModuleKind(ModuleKind.CommonJSModule)))
